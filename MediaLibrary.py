@@ -17,7 +17,7 @@ title_font = 20 # the font size of all the titles
 
 # Opens the database file and stores the content in the data variable
 def store():
-    with open("Database.txt", "r") as file:
+    with open("assets/database.txt", "r") as file:
         data = file.readlines()
     return data
 
@@ -115,7 +115,7 @@ def genAutonum():
 
 #clears the file ready for file to be rewritten
 def overwrite():
-    with open("Database.txt", "w") as file:
+    with open("assets/database.txt", "w") as file:
         file.write("#START#")
 
 
@@ -212,7 +212,7 @@ class MainMenu:
         self.refreshlbl = tk.Label(window, text="", bg=bg, font=("calibri", 10))
         self.refreshlbl.grid(column=2, row=6,pady=10)
 
-        self.photo = tk.PhotoImage(file="unnamed.png")
+        self.photo = tk.PhotoImage(file="assets/refresh.png")
         self.photoimage = self.photo.subsample(15, 15)
         refresh = ttk.Button(window, command=self.refreshButton, image=self.photoimage)
 
@@ -331,12 +331,12 @@ class Help:
         self.subheading.grid(column=2, row=2)
 
         #defines the image paths
-        self.homeimage = tk.PhotoImage(file="HomeScreenHelp.png")
-        self.addimage = tk.PhotoImage(file="AddScreenHelp.png")
-        self.editimage = tk.PhotoImage(file="EditScreenHelp.png")
-        self.delimage = tk.PhotoImage(file="DeleteScreenHelp.png")
-        self.sortimage = tk.PhotoImage(file="SortScreenHelp.png")
-        self.filterimage = tk.PhotoImage(file="FilterScreenHelp.png")
+        self.homeimage = tk.PhotoImage(file="assets/home-screen-help.png")
+        self.addimage = tk.PhotoImage(file="assets/add-screen-help.png")
+        self.editimage = tk.PhotoImage(file="assets/edit-screen-help.png")
+        self.delimage = tk.PhotoImage(file="assets/delete-screen-help.png")
+        self.sortimage = tk.PhotoImage(file="assets/sort-screen-help.png")
+        self.filterimage = tk.PhotoImage(file="assets/filter-screen-help.png")
 
         self.top.homeimage = self.homeimage
         self.content = tk.Canvas(self.top, height=420, width=750, bg=bg,highlightthickness=1, highlightbackground=bg)
@@ -567,7 +567,7 @@ class AddRecord:
         if valid:
             autonum = genAutonum() # creates an id number for the record
             record = [str(autonum), name, author, date, type] # creates the record
-            with open("Database.txt", "a") as file:
+            with open("assets/database.txt", "a") as file:
                 file.write("\n" + str(record)) # writes the record into file
 
 
@@ -685,11 +685,11 @@ class EditRecord:
             else: # if line is record
                 index = getIndex(i, self.data)
                 if index == recID: # if its the selected record
-                    with open("Database.txt", "a") as file:
+                    with open("assets/database.txt", "a") as file:
                         file.write("\n" + str(record) + "\n") # replace old record with new one
                     i += 1
                 else:
-                    with open("Database.txt", "a") as file:
+                    with open("assets/database.txt", "a") as file:
                         file.write("\n" + line) # rewrite the line
                     i += 1
 
@@ -750,7 +750,7 @@ class DeleteRecord:
                         i += 1 # skip that line
                         continue
                     else: # if record id doesnt == the requested id
-                        with open("Database.txt", "a") as file:
+                        with open("assets/database.txt", "a") as file:
                             file.write("\n" + line) # skip that line
                         i += 1
 
@@ -760,10 +760,10 @@ splashScreen = tk.Tk() # creates a window
 width = 800
 height = 600
 splashScreen.title("Media Library")
-splashScreen.call('wm', 'iconphoto', splashScreen._w, tk.PhotoImage(file='MLIcon.png'))
+splashScreen.call('wm', 'iconphoto', splashScreen._w, tk.PhotoImage(file='assets/icon.png'))
 splashScreen.configure(bg=bg)
 #defines attributes of window
-image1 = tk.PhotoImage(file="splashscreen1.png") # loads image for splashscreen
+image1 = tk.PhotoImage(file="assets/splash-screen.png") # loads image for splashscreen
 
 canvas = tk.Canvas(splashScreen, height=height*0.8, width=width*0.8, bg=bg) # creates canvas for image
 canvas.pack()
@@ -785,7 +785,7 @@ window = tk.Tk() # creates window
 window.title("Media Library")
 window.configure(bg=bg)
 window.geometry("800x400")
-window.call('wm', 'iconphoto', window._w, tk.PhotoImage(file='MLIcon.png'))  # adds favicon to window
+window.call('wm', 'iconphoto', window._w, tk.PhotoImage(file='assets/icon.png'))  # adds favicon to window
 MainScreen = MainMenu(window)  # creates object for the main menu
 
 window.mainloop()
