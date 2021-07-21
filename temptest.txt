@@ -1,6 +1,0 @@
-#START#
-['1', 'Pulp Fiction', 'Quentin Tarantino', '1994', 'DVD']
-['2', 'TA13OO', 'Denzel Curry', '2018', 'CD']
-['3', 'Witcher 3: Wild Hunt', 'CD Projekt Red', '2014', 'GAME']
-['4', 'GTA V', 'Rockstar', '2013', 'GAME']
-['5', 'RDR 2', 'Rockstar', '2018', 'GAME']
