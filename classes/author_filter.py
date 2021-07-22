@@ -6,7 +6,7 @@ class AuthorFilter(Filter):
         self.main_screen = main_screen
         self.file = file
         super().__init__(file, main_screen)  # gets parnet variables and methods
-        self.top.title("Media Library - Author Filter")
+        self.top.title("Media Database - Author Filter")
         self.title.configure(text="Author Filter")  # changes some of the variables
         self.filter_btn.configure(command=self.filter)
 

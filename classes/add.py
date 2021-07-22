@@ -9,7 +9,7 @@ class AddRecord:
         self.width = 500
         self.height = 400
         self.top = tk.Toplevel()
-        self.top.title("Media Library - Add Record")
+        self.top.title("Media Database - Add Record")
         self.top.geometry("%dx%d" % (self.width, self.height))
         self.top.configure(bg=Style.bg)
         # creates the form

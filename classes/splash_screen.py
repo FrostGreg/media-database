@@ -7,7 +7,7 @@ class SplashScreen:
         self.splash_screen = tk.Tk()  # creates a window
         self.width = 800
         self.height = 600
-        self.splash_screen.title("Media Library")
+        self.splash_screen.title("Media Database")
         self.splash_screen.call('wm', 'iconphoto', self.splash_screen._w, tk.PhotoImage(file='assets/icon.png'))
         self.splash_screen.configure(bg=Style.bg)
         # defines attributes of window

@@ -10,7 +10,7 @@ class EditRecord:
         self.width = 500
         self.height = 400
         self.top = tk.Toplevel()
-        self.top.title("Media Library - Edit Record")
+        self.top.title("Media Database - Edit Record")
         self.top.geometry("%dx%d" % (self.width, self.height))
         self.top.configure(bg=Style.bg)
         # creates the form
