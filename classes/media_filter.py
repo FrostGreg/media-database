@@ -6,7 +6,7 @@ class MediaFilter(Filter):
         self.main_screen = main_screen
         self.file = file
         super().__init__(file, main_screen)  # gets the variables and methods from parent
-        self.top.title("Media Library - Media Filter")  # changes some of the variables
+        self.top.title("Media Database - Media Filter")  # changes some of the variables
         self.title.configure(text="Media Filter")
         self.filter_btn.configure(command=self.filter)
 

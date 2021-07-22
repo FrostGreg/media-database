@@ -9,7 +9,7 @@ class Help:
         self.height = 600
         self.top = tk.Toplevel()  # creates new form on top of main screen
         self.top.geometry("%dx%d" % (self.width, self.height))  # creates the form
-        self.top.title("Media Library - Help Page")
+        self.top.title("Media Database - Help Page")
         self.top.configure(bg=Style.bg)
         self.page_num = 0
 

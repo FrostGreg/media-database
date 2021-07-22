@@ -9,7 +9,7 @@ class DeleteRecord:
         self.width = 500
         self.height = 400
         self.top = tk.Toplevel()
-        self.top.title("Media Library - Delete Record")
+        self.top.title("Media Database - Delete Record")
         self.top.geometry("%dx%d" % (self.width, self.height))
         self.top.configure(bg=Style.bg)
         # creates the form
