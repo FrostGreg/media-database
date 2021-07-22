@@ -70,7 +70,7 @@ class AddRecord:
     def get_values(self):
         # gets the current value of each input
         media_type = self.invalid.get()
-        media_type = self.file.typeConvert(media_type, "numToChar")
+        media_type = self.file.type_convert(media_type, "numToChar")
         name = self.media_entry.get()
         author = self.author_entry.get()
         date = self.date_entry.get()
@@ -90,7 +90,7 @@ class AddRecord:
         if check == 4:  # if all entry boxes are filled
             valid = True  # record becomes valid
         if valid:
-            auto_num = self.file.genAutonum()  # creates an id number for the record
+            auto_num = self.file.gen_auto_num()  # creates an id number for the record
             record = [str(auto_num), name, author, date, media_type]  # creates the record
             with open("assets/database.txt", "a") as file:
                 file.write("\n" + str(record))  # writes the record into file

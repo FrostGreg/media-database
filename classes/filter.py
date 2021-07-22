@@ -31,11 +31,11 @@ class Filter:
 
     def show_record(self, i):
         passed = False  # resets the loop
-        index = self.file.getIndex(i, "update")  # reopens the file and gathers information
-        name = self.file.getName(i, "update")
-        author = self.file.getAuthor(i, "update")
-        date = self.file.getDate(i, "update")
-        media_type = self.file.getType(i, "update")
+        index = self.file.get_index(i, "update")  # reopens the file and gathers information
+        name = self.file.get_name(i, "update")
+        author = self.file.get_author(i, "update")
+        date = self.file.get_date(i, "update")
+        media_type = self.file.get_type(i, "update")
         items = [index, name, author, date, media_type]  # compiles the info into one record
         for component in items:
             if component == "#START#":

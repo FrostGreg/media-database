@@ -40,7 +40,7 @@ class DeleteRecord:
 
     def delete_record(self):
         del_req = self.select_record.get()  # gets the user input for what record
-        auto_num = self.file.genAutonum()
+        auto_num = self.file.gen_auto_num()
         if int(del_req) >= auto_num:  # makes sure the record exists
             self.delete_lbl.configure(text="Record could not be found")
         else:  # if record exists
@@ -48,7 +48,7 @@ class DeleteRecord:
             self.file.overwrite()  # clear the file data
             i = 0
             for line in data:
-                index = self.file.getIndex(i, data)  # gets index of each line
+                index = self.file.get_index(i, data)  # gets index of each line
                 if line == "#START#\n":  # ignores the non record lines
                     i += 1
                     continue

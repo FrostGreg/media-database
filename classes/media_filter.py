@@ -16,8 +16,8 @@ class MediaFilter(Filter):
         self.main_screen.table.delete(*self.main_screen.table.get_children())  # clears the table
         i = 0
         for _ in data:
-            type = self.file.getType(i, data)  # gets the media type
-            if type == self.filter:  # if type equals what the user wants then display record
+            media_type = self.file.get_type(i, data)  # gets the media type
+            if media_type == self.filter:  # if type equals what the user wants then display record
                 self.show_record(i)
                 i += 1
             else:

@@ -75,18 +75,18 @@ class EditRecord:
 
     def load_record(self):
         rec_id = self.check_ID.get()  # finds the correct file
-        auto_num = self.file.genAutonum()  # gens a new index number to should the last possible record id
+        auto_num = self.file.gen_auto_num()  # gens a new index number to should the last possible record id
         if int(rec_id) >= auto_num:  # stops users from trying to find record that isnt there
             self.submit_lbl.configure(text="The record could not be found")  # feedback for user
         else:  # if record was found
-            index = int(self.file.findRecord(rec_id))  # gets index number
-            media_type = self.file.getType(index, "update")
-            media_type = self.file.typeConvert(media_type, "charToNum")
+            index = int(self.file.find_record(rec_id))  # gets index number
+            media_type = self.file.get_type(index, "update")
+            media_type = self.file.type_convert(media_type, "charToNum")
             int(media_type)
             self.invalid.set(media_type)
-            media = self.file.getName(index, "update")
-            author = self.file.getAuthor(index, "update")
-            date = self.file.getDate(index, "update")  # gets record information
+            media = self.file.get_name(index, "update")
+            author = self.file.get_author(index, "update")
+            date = self.file.get_date(index, "update")  # gets record information
 
             self.media_name.delete(0, tk.END)  # clears the entry box
             self.media_name.insert(0, media)  # inputs the record information into entry box
@@ -103,7 +103,7 @@ class EditRecord:
         author = self.author.get()
         date = self.date.get()
         media_type = self.invalid.get()
-        media_type = self.file.typeConvert(media_type, "numToChar")  # gets the record info
+        media_type = self.file.type_convert(media_type, "numToChar")  # gets the record info
         record = [rec_id, name, author, date, media_type]  # creates a record
 
         i = 0  # initialises the start of loop
@@ -116,7 +116,7 @@ class EditRecord:
                 i += 1
                 continue
             else:  # if line is record
-                index = self.file.getIndex(i, self.data)
+                index = self.file.get_index(i, self.data)
                 if index == rec_id:  # if its the selected record
                     with open("assets/database.txt", "a") as file:
                         file.write("\n" + str(record) + "\n")  # replace old record with new one

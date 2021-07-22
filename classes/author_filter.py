@@ -16,7 +16,7 @@ class AuthorFilter(Filter):
         self.main_screen.table.delete(*self.main_screen.table.get_children())  # clears the table
         i = 0
         for _ in data:
-            author = self.file.getAuthor(i, data)  # gets the author of the line
+            author = self.file.get_author(i, data)  # gets the author of the line
             if filter.title() in author or filter.upper() in author or filter.lower() in author:
                 self.show_record(i)  # if user request is in name of author then show the record
                 i += 1
