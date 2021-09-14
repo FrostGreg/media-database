@@ -4,8 +4,9 @@ from .style import Style
 
 
 class AddRecord:
-    def __init__(self, file):
+    def __init__(self, file, menu):
         self.file = file
+        self.menu = menu
         self.width = 500
         self.height = 400
         self.top = tk.Toplevel()
@@ -66,6 +67,8 @@ class AddRecord:
     def submit_record(self):
         if self.create_record():  # creates the record in the database
             self.submit_lbl.configure(text="Record Submitted \nPlease close the window")  # feedback for user
+            self.menu.refresh_btn()
+            self.top.destroy()
 
     def get_values(self):
         # gets the current value of each input

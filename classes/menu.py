@@ -113,9 +113,9 @@ class MainMenu:
         refresh.grid(column=2, row=5, pady=5)
 
         self.but_add = ttk.Button(window, text="Add record",
-                                  command=lambda: AddRecord(self.file))  # command calls the class
-        self.but_edit = ttk.Button(window, text="Edit Record", command=lambda: EditRecord(self.file))
-        self.but_del = ttk.Button(window, text="Delete Record", command=lambda: DeleteRecord(self.file),
+                                  command=lambda: AddRecord(self.file, self))  # command calls the class
+        self.but_edit = ttk.Button(window, text="Edit Record", command=lambda: EditRecord(self.file, self))
+        self.but_del = ttk.Button(window, text="Delete Record", command=lambda: DeleteRecord(self.file, self),
                                   style="W.TButton")
         # adds the unique style of the delete button
 
@@ -131,8 +131,8 @@ class MainMenu:
         self.owner_lbl.grid(column=1, row=6)
 
     def refresh_btn(self):
-        self.refresh_lbl.configure(text="Table Refreshed")
         self.fill_table()  # refills the table with new information
+        self.refresh_lbl.configure(text="Table Refreshed")
 
     def sort_record(self, method):
         self.table.delete(*self.table.get_children())  # clears the table

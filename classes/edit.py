@@ -4,8 +4,9 @@ from .style import Style
 
 
 class EditRecord:
-    def __init__(self, file):
+    def __init__(self, file, menu):
         self.file = file
+        self.menu = menu
         self.data = self.file.load()
         self.width = 500
         self.height = 400
@@ -72,6 +73,8 @@ class EditRecord:
     def submit_btn(self):
         if self.edit_record():  # updates the record with edited information
             self.submit_lbl.configure(text="Record has been Edited\nPlease close this window")  # feedback for user
+            self.menu.refresh_btn()
+            self.top.destroy()
 
     def validate_record(self):
         rec_id = self.check_ID.get()

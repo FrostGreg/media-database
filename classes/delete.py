@@ -4,7 +4,8 @@ from .style import Style
 
 
 class DeleteRecord:
-    def __init__(self, file):
+    def __init__(self, file, menu):
+        self.menu = menu
         self.file = file
         self.width = 500
         self.height = 400
@@ -37,6 +38,8 @@ class DeleteRecord:
     def delete_btn(self):
         if self.delete_record():  # deletes the record
             self.delete_lbl.configure(text="Record has been deleted \nPlease close this window")  # feedback for user
+            self.menu.refresh_btn()
+            self.top.destroy()
 
     def validate_input(self):
         user_in = self.select_record.get()
