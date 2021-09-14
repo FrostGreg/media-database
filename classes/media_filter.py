@@ -11,14 +11,10 @@ class MediaFilter(Filter):
         self.filter_btn.configure(command=self.filter)
 
     def filter(self):
-        self.filter = self.filter_entry.get().upper()  # gets the users requested filter and stores it in upper class
-        data = self.file.store()
+        media_filter = self.filter_entry.get().upper()  # gets the users requested filter and stores it in upper class
+        data = self.file.load()
         self.main_screen.table.delete(*self.main_screen.table.get_children())  # clears the table
-        i = 0
-        for _ in data:
-            media_type = self.file.get_type(i, data)  # gets the media type
-            if media_type == self.filter:  # if type equals what the user wants then display record
-                self.show_record(i)
-                i += 1
-            else:
-                i += 1
+        for record in data:
+            media_type = self.file.get_type(record)  # gets the media type
+            if media_type == media_filter:  # if type equals what the user wants then display record
+                self.show_record(record)

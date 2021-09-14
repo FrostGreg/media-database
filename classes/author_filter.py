@@ -11,14 +11,11 @@ class AuthorFilter(Filter):
         self.filter_btn.configure(command=self.filter)
 
     def filter(self):
-        filter = self.filter_entry.get()  # gets the user filter request
-        data = self.file.store()  # gets the data from file
+        author_filter = self.filter_entry.get()  # gets the user filter request
+        data = self.file.load()  # gets the data from file
         self.main_screen.table.delete(*self.main_screen.table.get_children())  # clears the table
-        i = 0
-        for _ in data:
-            author = self.file.get_author(i, data)  # gets the author of the line
-            if filter.title() in author or filter.upper() in author or filter.lower() in author:
-                self.show_record(i)  # if user request is in name of author then show the record
-                i += 1
-            else:
-                i += 1
+        for record in data:
+            author = self.file.get_author(record)  # gets the author of the line
+            if any(variant in author for variant in
+                   [author_filter.title(), author_filter.upper(), author_filter.lower()]):
+                self.show_record(record)  # if user request is in name of author then show the record

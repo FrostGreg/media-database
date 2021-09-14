@@ -98,7 +98,7 @@ class MainMenu:
         self.table.heading("two", text="Author Name", command=lambda: self.sort_record("author"))
         self.table.heading("three", text="Date", command=lambda: self.sort_record("date"))
         self.table.heading("four", text="Media Type", command=lambda: self.sort_record("type"))
-        # lamda used so that function can be called with arguments without it running directly
+        # lambda used so that function can be called with arguments without it running directly
 
         self.fill_table()
         self.table.grid(column=2, row=2, rowspan=3)
@@ -136,65 +136,37 @@ class MainMenu:
 
     def sort_record(self, method):
         self.table.delete(*self.table.get_children())  # clears the table
-        data = self.file.store()  # gets the database file
-        i = 0
-        item = ["", i]
-        date_index = list()
-        for line in data:
-            # ignores non record lines
-            if line == "#START#\n":
-                i += 1
-            elif line == "\n":
-                i += 1
+        date_index = []
+        for record in self.file.load():
+            # adds sorting information into list
+            if method == "date":
+                item = self.file.get_date(record)
+            elif method == "author":
+                item = self.file.get_author(record)
+            elif method == "name":
+                item = self.file.get_name(record)
+            elif method == "type":
+                item = self.file.get_type(record)
             else:
-                # adds sorting information into list
-                if method == "date":
-                    date = self.file.get_date(i, "update")
-                    item = [date, i]
+                item = ""
 
-                elif method == "author":
-                    author = self.file.get_author(i, "update")
-                    item = [author, i]
+            date_index.append([item, self.file.get_index(record)])
 
-                elif method == "name":
-                    name = self.file.get_name(i, "update")
-                    item = [name, i]
-
-                elif method == "type":
-                    media_type = self.file.get_type(i, "update")
-                    item = [media_type, i]
-
-                date_index.append(item)
-                i += 1
-
-        final = sorted(date_index, key=lambda x: x[0])  # sorts the records
-        ind = 0
-        for _ in final:
+        for record in sorted(date_index, key=lambda x: x[0]):
             # puts the sorted record into the table
-            index = final[ind][1]
-            name = self.file.get_name(index, "update")
-            author = self.file.get_author(index, "update")
-            date = self.file.get_date(index, "update")
-            media_type = self.file.get_type(index, "update")
-            index = int(self.file.get_index(index, "update"))
+            index = record[1]
+            name = self.file.get_name(self.file.find_record(index).fetchone())
+            author = self.file.get_author(self.file.find_record(index).fetchone())
+            date = self.file.get_date(self.file.find_record(index).fetchone())
+            media_type = self.file.get_type(self.file.find_record(index).fetchone())
             self.table.insert("", tk.END, text=index, values=(name, author, date, media_type))
-            ind += 1
 
     def fill_table(self):
         self.table.delete(*self.table.get_children())
-        data = self.file.store()
-        i = 0
-        for lines in data:
-            if lines == "#START#\n":
-                i += 1
-            elif lines == "\n":
-                i += 1
-            else:
-                index = self.file.get_index(i, "update")
-                name = self.file.get_name(i, "update")
-                author = self.file.get_author(i, "update")
-                author = author.title()
-                date = self.file.get_date(i, "update")
-                media_type = self.file.get_type(i, "update")
-                self.table.insert("", i, text=index, values=(name, author, date, media_type))
-                i += 1
+        for i, record in enumerate(self.file.load()):
+            index = self.file.get_index(record)
+            name = self.file.get_name(record)
+            author = self.file.get_author(record)
+            date = self.file.get_date(record)
+            media_type = self.file.get_type(record)
+            self.table.insert("", i, text=index, values=(name, author, date, media_type))

@@ -64,8 +64,8 @@ class AddRecord:
         self.submit_lbl.grid(column=1, row=8)
 
     def submit_record(self):
-        self.submit_lbl.configure(text="Record Submitted \nPlease close the window")  # feedback for user
-        self.create_record()  # creates the record in the database
+        if self.create_record():  # creates the record in the database
+            self.submit_lbl.configure(text="Record Submitted \nPlease close the window")  # feedback for user
 
     def get_values(self):
         # gets the current value of each input
@@ -76,21 +76,30 @@ class AddRecord:
         date = self.date_entry.get()
         return media_type, name, author, date
 
-    def create_record(self):
-        media_type, name, author, date = self.get_values()
-        attributes = [media_type, name, author, date]
+    def validate_input(self):
         valid = False  # resets the validity check
-        check = 0
-        for x in attributes:
+        attributes = self.get_values()
+        for x in attributes[:3]:
             if len(x) == 0:  # if nothing in entry box
                 self.submit_lbl.configure(
                     text="*Please make sure all\nentry boxes are filled")  # say nothing in entry box
-            else:
-                check += 1  # entry box is filled
-        if check == 4:  # if all entry boxes are filled
-            valid = True  # record becomes valid
-        if valid:
-            auto_num = self.file.gen_auto_num()  # creates an id number for the record
-            record = [str(auto_num), name, author, date, media_type]  # creates the record
-            with open("assets/database.txt", "a") as file:
-                file.write("\n" + str(record))  # writes the record into file
+                break
+        else:
+            valid = True
+
+        # Checks if date is a valid integer
+        try:
+            int(attributes[3])
+        except ValueError:
+            self.submit_lbl.configure(text="Invalid Date")
+            valid = False
+
+        return valid
+
+    def create_record(self):
+        if self.validate_input():
+            media_type, name, author, date = self.get_values()
+            self.file.cursor.execute("INSERT INTO records (name, author, year, type) VALUES (?, ?, ?, ?)",
+                                     (name, author, date, media_type))
+            self.file.db.commit()
+            return True

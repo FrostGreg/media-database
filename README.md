@@ -31,3 +31,6 @@ Media Filter
 Author Filter
 
 ![Image of the author filter screen](assets/display/author-filter.PNG)
+
+## Whats new in Version 2
+Nothing much, the database will be implemented using sqlite3 instead of a text document because a database app is a lot better suited for sql rather than a text document :roll_eyes:

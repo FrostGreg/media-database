@@ -35,31 +35,30 @@ class DeleteRecord:
         self.delete_lbl.grid(row=5, column=2)
 
     def delete_btn(self):
-        self.delete_lbl.configure(text="Record has been deleted \nPlease close this window")  # feedback for user
-        self.delete_record()  # deletes the record
+        if self.delete_record():  # deletes the record
+            self.delete_lbl.configure(text="Record has been deleted \nPlease close this window")  # feedback for user
+
+    def validate_input(self):
+        user_in = self.select_record.get()
+        valid = False
+        if len(user_in) == 0:
+            self.delete_lbl.configure(text="Enter A Record ID")
+        else:
+            try:
+                user_in = int(user_in)
+                if not self.file.cursor.execute("SELECT * FROM records WHERE id = ?;", (user_in,)):
+                    self.delete_lbl.configure(text="Record does not exist")
+                else:
+                    valid = True
+            except ValueError:
+                self.delete_lbl.configure(text="Invalid Record ID")
+
+        return valid
 
     def delete_record(self):
-        del_req = self.select_record.get()  # gets the user input for what record
-        auto_num = self.file.gen_auto_num()
-        if int(del_req) >= auto_num:  # makes sure the record exists
-            self.delete_lbl.configure(text="Record could not be found")
-        else:  # if record exists
-            data = self.file.store()  # store the current file data
-            self.file.overwrite()  # clear the file data
-            i = 0
-            for line in data:
-                index = self.file.get_index(i, data)  # gets index of each line
-                if line == "#START#\n":  # ignores the non record lines
-                    i += 1
-                    continue
-                elif line == "\n":
-                    i += 1
-                    continue
-                else:
-                    if index == del_req:  # if record id == the requested id
-                        i += 1  # skip that line
-                        continue
-                    else:  # if record id doesnt == the requested id
-                        with open("assets/database.txt", "a") as file:
-                            file.write("\n" + line)  # skip that line
-                        i += 1
+        if self.validate_input():
+            del_rec = self.select_record.get()  # gets the user input for what record
+            self.file.cursor.execute("DELETE FROM records WHERE id = ?", (del_rec,))
+            self.file.db.commit()
+            return True
+
