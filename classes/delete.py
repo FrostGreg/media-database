@@ -23,17 +23,34 @@ class DeleteRecord:
                               relief="ridge")
         self.title.grid(row=1, column=2, padx=110, pady=20)
 
-        self.record_lbl = tk.Label(self.top, text="Please enter the record ID that you want to be deleted: ", bg=Style.bg)
-        self.record_lbl.grid(row=2, column=2, pady=50)
+        self.record_id_lbl = tk.Label(self.top, text="Please enter the record ID that you want to be deleted: ", bg=Style.bg)
+        self.record_id_lbl.grid(row=2, column=2, pady=20)
 
         self.select_record = tk.Entry(self.top)
         self.select_record.grid(row=3, column=2)
 
+        self.record_load_btn = ttk.Button(self.top, text="Load", style="W.TButton", command=self.load_record)
+        self.record_load_btn.grid(row=4, column=2, pady=10)
+
+        self.record_lbl = tk.Label(self.top, text="Are you sure you want to delete this record?", bg=Style.bg)
+        self.record_lbl.grid(row=5, column=2, pady=10)
+
+        self.record_entry = tk.Entry(self.top, state="readonly", width=50)
+        self.record_entry.grid(row=6, column=2)
+
         self.btn_del = ttk.Button(self.top, text="Delete Record", command=self.delete_btn, style="W.TButton")
-        self.btn_del.grid(row=4, column=2, pady=20)
+        self.btn_del.grid(row=7, column=2, pady=20)
 
         self.delete_lbl = tk.Label(self.top, text=" ", bg=Style.bg, font=("calibri"))
-        self.delete_lbl.grid(row=5, column=2)
+        self.delete_lbl.grid(row=8, column=2)
+
+    def load_record(self):
+        if self.validate_input():
+            record = self.file.find_record(int(self.select_record.get())).fetchone()
+            self.record_entry.configure(state="normal")
+            self.record_entry.delete(0, tk.END)
+            self.record_entry.insert(0, str(record))
+            self.record_entry.configure(state="readonly")
 
     def delete_btn(self):
         if self.delete_record():  # deletes the record
